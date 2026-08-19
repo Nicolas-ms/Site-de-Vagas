@@ -56,6 +56,19 @@ export const fontes: FonteColetor[] = [
     nome: "Himalayas",
     url: "https://himalayas.app/jobs/rss",
   }),
+
+  criarFonteJson({
+    nome: "Trampos",
+    url: "http://trampos.co/api/oportunidades.json",
+    obterLista: (dados) => dados as unknown[],
+    mapear: (item) => {
+      const o = (item as { opportunity?: { name?: string; permalink?: string } })
+        .opportunity;
+      return o && o.name && o.permalink
+        ? { titulo: o.name, urlExterna: o.permalink }
+        : null;
+    },
+  }),
 ];
 
 export async function coletarTodas(): Promise<{
