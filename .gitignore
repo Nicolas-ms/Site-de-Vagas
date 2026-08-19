@@ -54,3 +54,7 @@ prisma/dev.db
 skills-lock.json
 AGENTS.md
 CLAUDE.md
+
+# lockfiles alternativos
+bun.lock
+bun.lockb

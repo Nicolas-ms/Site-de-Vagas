@@ -2,12 +2,59 @@ import { prisma } from "@/app/lib/prisma";
 import type { FonteColetor, VagaColetada } from "./tipos";
 import { criarFonteGitHub } from "./adaptadores/github";
 import { criarFonteRss } from "./adaptadores/rss";
+import { criarFonteJson } from "./adaptadores/json";
 
 export const fontes: FonteColetor[] = [
   criarFonteGitHub(),
-  criarFonteRss({
+
+  criarFonteJson({
     nome: "Remotive",
-    url: "https://remotive.com/remote-jobs/feed",
+    url: "https://remotive.com/api/remote-jobs",
+    obterLista: (dados) =>
+      (dados as { jobs?: unknown[] }).jobs ?? (dados as unknown[]),
+    mapear: (item) => {
+      const j = item as { title?: string; url?: string };
+      return j.title && j.url
+        ? { titulo: j.title, urlExterna: j.url }
+        : null;
+    },
+  }),
+
+  criarFonteJson({
+    nome: "RemoteOK",
+    url: "https://remoteok.com/api",
+    obterLista: (dados) => {
+      const lista = dados as unknown[];
+      return lista.slice(1);
+    },
+    mapear: (item) => {
+      const j = item as { position?: string; url?: string };
+      return j.position && j.url
+        ? { titulo: j.position, urlExterna: j.url }
+        : null;
+    },
+  }),
+
+  criarFonteJson({
+    nome: "Jobicy",
+    url: "https://jobicy.com/api/v2/remote-jobs",
+    obterLista: (dados) => (dados as { jobs?: unknown[] }).jobs ?? [],
+    mapear: (item) => {
+      const j = item as { jobTitle?: string; url?: string };
+      return j.jobTitle && j.url
+        ? { titulo: j.jobTitle, urlExterna: j.url }
+        : null;
+    },
+  }),
+
+  criarFonteRss({
+    nome: "WeWorkRemotely",
+    url: "https://weworkremotely.com/remote-jobs.rss",
+  }),
+
+  criarFonteRss({
+    nome: "Himalayas",
+    url: "https://himalayas.app/jobs/rss",
   }),
 ];
 
