@@ -69,6 +69,18 @@ export const fontes: FonteColetor[] = [
         : null;
     },
   }),
+
+  criarFonteJson({
+    nome: "Gupy",
+    url: "https://portal.api.gupy.io/api/job?name=desenvolvedor&offset=0&limit=100",
+    obterLista: (dados) => (dados as { data?: unknown[] }).data ?? [],
+    mapear: (item) => {
+      const j = item as { name?: string; jobUrl?: string };
+      return j.name && j.jobUrl
+        ? { titulo: j.name, urlExterna: j.jobUrl }
+        : null;
+    },
+  }),
 ];
 
 export async function coletarTodas(): Promise<{
