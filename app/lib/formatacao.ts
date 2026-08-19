@@ -6,7 +6,3 @@ export function formatarData(data: Date | string): string {
     year: "numeric",
   });
 }
-
-export function formatarSalario(salario: string | null): string {
-  return salario || "A combinar";
-}

@@ -1,70 +1,69 @@
-import Link from "next/link";
 import VagaCard from "@/app/components/VagaCard";
+import AtualizarVagas from "@/app/components/AtualizarVagas";
 import { prisma } from "@/app/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-const categorias = [
-  "Tecnologia",
-  "Marketing",
-  "Vendas",
-  "Administrativo",
-  "Atendimento",
-  "Financeiro",
-  "Outros",
-];
-
 export default async function Home({
   searchParams,
 }: PageProps<"/">) {
-  const { q = "", categoria = "" } = await searchParams;
-
-  const where: Record<string, unknown> = { ativa: true };
-  if (categoria) where.categoria = categoria;
-  if (q) {
-    where.OR = [
-      { titulo: { contains: q } },
-      { empresa: { contains: q } },
-      { local: { contains: q } },
-      { descricao: { contains: q } },
-    ];
-  }
+  const { q = "" } = await searchParams;
+  const termo = String(q).trim();
 
   const vagas = await prisma.vaga.findMany({
-    where,
-    orderBy: { createdAt: "desc" },
+    where: termo
+      ? {
+          OR: [
+            { titulo: { contains: termo } },
+            { origem: { contains: termo } },
+          ],
+        }
+      : undefined,
+    orderBy: { criadoEm: "desc" },
+    take: 200,
+  });
+
+  const origens = await prisma.vaga.groupBy({
+    by: ["origem"],
+    _count: { _all: true },
+    orderBy: { _count: { origem: "desc" } },
   });
 
   return (
     <main className="container">
       <header className="hero">
-        <h1>Encontre sua próxima oportunidade</h1>
-        <p>Vagas de emprego atualizadas todos os dias em diversas áreas.</p>
-        <Link href="/vagas/nova" className="btn btn-primario">
-          Publicar uma vaga
-        </Link>
+        <h1>Vagas de TI e tecnologia em um só lugar</h1>
+        <p>
+          Indexamos vagas de várias fontes para você encontrar tudo em um único
+          lugar.
+        </p>
+        <AtualizarVagas />
       </header>
 
       <form className="busca" method="get">
         <input
           type="search"
           name="q"
-          placeholder="Buscar por cargo, empresa ou cidade..."
-          defaultValue={q}
+          placeholder="Buscar por cargo, tecnologia ou fonte..."
+          defaultValue={termo}
           className="busca-input"
         />
-        <select name="categoria" defaultValue={categoria} className="busca-select">
-          <option value="">Todas as categorias</option>
-          {categorias.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
         <button type="submit" className="btn btn-primario">
           Buscar
         </button>
       </form>
+
+      <section className="fontes">
+        <h2 className="titulo-secao">Fontes indexadas</h2>
+        <div className="lista-fontes">
+          {origens.map((fonte) => (
+            <span key={fonte.origem} className="fonte">
+              {fonte.origem}
+              <strong>{fonte._count._all}</strong>
+            </span>
+          ))}
+        </div>
+      </section>
 
       <section>
         <h2 className="titulo-secao">
@@ -77,7 +76,7 @@ export default async function Home({
 
         {vagas.length === 0 ? (
           <p className="sem-resultados">
-            Não encontramos vagas com esses filtros. Tente ajustar a busca.
+            Não encontramos vagas com esses termos. Tente outra busca.
           </p>
         ) : (
           <div className="lista-vagas">

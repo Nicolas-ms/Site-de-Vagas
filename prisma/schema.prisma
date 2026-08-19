@@ -11,16 +11,11 @@ datasource db {
 }
 
 model Vaga {
-  id          String   @id @default(cuid())
-  titulo      String
-  empresa     String
-  descricao   String
-  salario     String?
-  local       String
-  categoria   String
-  tipo        String   @default("CLT")
-  emailContato String
-  ativa       Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  titulo       String
+  origem       String
+  urlExterna   String   @unique
+  descricao    String?
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
 }

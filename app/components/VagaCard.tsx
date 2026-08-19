@@ -1,31 +1,27 @@
-import Link from "next/link";
-import { formatarData, formatarSalario } from "@/app/lib/formatacao";
+import { formatarData } from "@/app/lib/formatacao";
 
 type VagaProps = {
   id: string;
   titulo: string;
-  empresa: string;
-  salario: string | null;
-  local: string;
-  categoria: string;
-  tipo: string;
-  createdAt: Date | string;
+  origem: string;
+  urlExterna: string;
+  criadoEm: Date | string;
 };
 
 export default function VagaCard({ vaga }: { vaga: VagaProps }) {
   return (
-    <Link href={`/vagas/${vaga.id}`} className="vaga-card">
+    <a
+      href={vaga.urlExterna}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="vaga-card"
+    >
       <div className="vaga-card-top">
-        <span className="vaga-tipo">{vaga.tipo}</span>
-        <span className="vaga-data">{formatarData(vaga.createdAt)}</span>
+        <span className="vaga-tipo">{vaga.origem}</span>
+        <span className="vaga-data">{formatarData(vaga.criadoEm)}</span>
       </div>
       <h2 className="vaga-titulo">{vaga.titulo}</h2>
-      <p className="vaga-empresa">{vaga.empresa}</p>
-      <div className="vaga-card-tags">
-        <span className="tag">{vaga.local}</span>
-        <span className="tag">{vaga.categoria}</span>
-        <span className="tag tag-salario">{formatarSalario(vaga.salario)}</span>
-      </div>
-    </Link>
+      <p className="vaga-abrir">Abrir vaga &rarr;</p>
+    </a>
   );
 }

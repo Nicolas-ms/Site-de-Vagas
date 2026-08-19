@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vagas.com - Encontre sua próxima oportunidade",
+  title: "Agregador de Vagas - TI em um só lugar",
   description:
-    "Portal de empregos com vagas atualizadas em diversas áreas: tecnologia, marketing, vendas e mais.",
+    "Indexamos vagas de tecnologia e TI de várias fontes em um único lugar.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,15 +27,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <a href="/" className="nav-logo">
               Vagas<span>.com</span>
             </a>
-            <a href="/vagas/nova" className="nav-link">
-              Publicar vaga
-            </a>
           </div>
         </nav>
         {children}
         <footer className="rodape">
           <div className="container">
-            <p>Vagas.com &copy; {new Date().getFullYear()} - Portal de empregos</p>
+            <p>Vagas.com &copy; {new Date().getFullYear()} - Agregador de vagas</p>
           </div>
         </footer>
       </body>
