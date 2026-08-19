@@ -1,0 +1,373 @@
+:root {
+  --cor-primaria: #2563eb;
+  --cor-primaria-escura: #1d4ed8;
+  --cor-texto: #111827;
+  --cor-texto-suave: #6b7280;
+  --cor-fundo: #f9fafb;
+  --cor-borda: #e5e7eb;
+  --cor-branco: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Navegação */
+.nav {
+  background: var(--cor-branco);
+  border-bottom: 1px solid var(--cor-borda);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--cor-texto);
+}
+
+.nav-logo span {
+  color: var(--cor-primaria);
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 3.5rem 0 2rem;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  color: var(--cor-texto-suave);
+  margin-bottom: 1.5rem;
+}
+
+/* Busca */
+.busca {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.busca-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.busca-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  background: var(--cor-branco);
+  font-size: 1rem;
+}
+
+/* Botões */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-primario {
+  background: var(--cor-primaria);
+  color: var(--cor-branco);
+}
+
+.btn-primario:hover {
+  background: var(--cor-primaria-escura);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Lista de vagas */
+.titulo-secao {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.lista-vagas {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.sem-resultados {
+  color: var(--cor-texto-suave);
+  padding: 2rem 0;
+}
+
+.vaga-card {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: block;
+}
+
+.vaga-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.vaga-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.vaga-tipo {
+  background: #dbeafe;
+  color: var(--cor-primaria-escura);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.vaga-data {
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+.vaga-titulo {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.vaga-empresa {
+  color: var(--cor-texto-suave);
+  margin-bottom: 0.75rem;
+}
+
+.vaga-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-size: 0.8rem;
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  color: var(--cor-texto-suave);
+}
+
+.tag-salario {
+  color: var(--cor-primaria-escura);
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+/* Página de detalhe */
+.detalhe {
+  padding-top: 1.5rem;
+}
+
+.voltar {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--cor-primaria);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.vaga-detalhe {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.vaga-detalhe-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.vaga-detalhe h1 {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+}
+
+.vaga-info-data {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.vaga-detalhe-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.vaga-detalhe h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.vaga-descricao {
+  white-space: pre-line;
+  margin-bottom: 1.5rem;
+}
+
+.vaga-candidatura {
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.vaga-candidatura a {
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+/* Página de formulário */
+.pagina-titulo {
+  font-size: 1.8rem;
+  padding-top: 1.5rem;
+}
+
+.pagina-subtitulo {
+  color: var(--cor-texto-suave);
+  margin: 0.25rem 0 2rem;
+}
+
+.formulario {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  padding: 2rem;
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.formulario label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--cor-branco);
+}
+
+.formulario textarea {
+  resize: vertical;
+}
+
+.formulario-duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.erro {
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+/* Rodapé */
+.rodape {
+  margin-top: auto;
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-branco);
+  padding: 1.5rem 0;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .busca {
+    flex-direction: column;
+  }
+
+  .formulario-duas-colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .vaga-detalhe-cabecalho {
+    flex-direction: column;
+  }
+}
