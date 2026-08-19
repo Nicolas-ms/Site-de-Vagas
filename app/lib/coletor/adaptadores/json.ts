@@ -9,6 +9,7 @@ type OpcoesJson = {
     urlExterna: string;
     descricao?: string;
   } | null;
+  headers?: Record<string, string>;
 };
 
 export function criarFonteJson(opcoes: OpcoesJson): FonteColetor {
@@ -16,7 +17,10 @@ export function criarFonteJson(opcoes: OpcoesJson): FonteColetor {
     nome: opcoes.nome,
     coletar: async () => {
       const resposta = await fetch(opcoes.url, {
-        headers: { "User-Agent": "Site-de-Vagas" },
+        headers: {
+          "User-Agent": "Site-de-Vagas",
+          ...opcoes.headers,
+        },
       });
 
       if (!resposta.ok) {

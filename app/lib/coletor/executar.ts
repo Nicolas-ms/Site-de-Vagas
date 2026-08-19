@@ -4,6 +4,8 @@ import { criarFonteGitHub } from "./adaptadores/github";
 import { criarFonteRss } from "./adaptadores/rss";
 import { criarFonteJson } from "./adaptadores/json";
 
+const gupyToken = process.env.GUPY_API_TOKEN;
+
 export const fontes: FonteColetor[] = [
   criarFonteGitHub(),
 
@@ -69,19 +71,29 @@ export const fontes: FonteColetor[] = [
         : null;
     },
   }),
-
-  criarFonteJson({
-    nome: "Gupy",
-    url: "https://portal.api.gupy.io/api/job?name=desenvolvedor&offset=0&limit=100",
-    obterLista: (dados) => (dados as { data?: unknown[] }).data ?? [],
-    mapear: (item) => {
-      const j = item as { name?: string; jobUrl?: string };
-      return j.name && j.jobUrl
-        ? { titulo: j.name, urlExterna: j.jobUrl }
-        : null;
-    },
-  }),
 ];
+
+if (gupyToken) {
+  fontes.push(
+    criarFonteJson({
+      nome: "Gupy",
+      url: "https://api.gupy.io/api/v1/jobs",
+      obterLista: (dados) =>
+        (dados as { results?: unknown[] }).results ?? [],
+      mapear: (item) => {
+        const j = item as { name?: string; url?: string; id?: number };
+        return j.name && j.url
+          ? { titulo: j.name, urlExterna: j.url }
+          : null;
+      },
+      headers: { Authorization: `Bearer ${gupyToken}` },
+    })
+  );
+} else {
+  console.warn(
+    "Gupy não configurada: defina GUPY_API_TOKEN no .env para indexar vagas da Gupy."
+  );
+}
 
 export async function coletarTodas(): Promise<{
   novas: number;
